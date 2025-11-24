@@ -10,8 +10,6 @@ A beautiful, modern web application for managing Docker containers with ease. Sp
 
 - 🎨 **Beautiful Modern UI** - Stunning gradient-based design with smooth animations
 - 🐳 **Docker Integration** - Full control over Docker containers
-- 🐋 **Portainer Included** - Advanced Docker GUI for power users
-- 🔄 **Watchtower Auto-Updates** - Automatically keeps containers up-to-date
 - 📊 **Real-time Monitoring** - Live CPU and memory usage stats
 - 🎮 **Pre-built Templates** - Quick setup for popular servers:
   - Web servers (Nginx, Apache)
@@ -53,14 +51,10 @@ This will:
 - Start the application on:
   - **Server Manager UI**: http://localhost:3000
   - **Backend API**: http://localhost:3001
-  - **Portainer** (Docker GUI): http://localhost:9000
-  - **Watchtower**: Running in background (auto-updates containers)
 
 ### 3. Open Your Browser
 
 Navigate to `http://localhost:3000` and start managing your servers!
-
-**Bonus**: Access Portainer at `http://localhost:9000` for advanced Docker management (create admin account on first visit).
 
 ## 🎯 Usage Guide
 
@@ -163,35 +157,6 @@ DATA_DIR=/server-data
 ```env
 REACT_APP_API_URL=http://localhost:3001
 ```
-
-## 🐋 Portainer & Watchtower
-
-### Portainer - Advanced Docker Management
-Access at `http://localhost:9000`
-
-**First-time setup:**
-1. Create admin account
-2. Select "Docker" environment
-3. Manage all containers with a powerful GUI
-
-**Features:**
-- Visual container management
-- Image management and registry connections
-- Volume and network management
-- Container console access
-- Docker Compose deployment
-- Stacks and templates
-
-### Watchtower - Automatic Updates
-Runs in the background checking for image updates daily.
-
-**Configuration** (edit `docker-compose.yml`):
-- `WATCHTOWER_POLL_INTERVAL`: Update check frequency (86400 = 24h)
-- `WATCHTOWER_CLEANUP`: Remove old images after update
-- Notifications: Set `WATCHTOWER_NOTIFICATION_URL` for alerts (Discord, Slack, email)
-
-**Disable auto-updates for specific containers:**
-Add label to container: `com.centurylinklabs.watchtower.enable=false`
 
 ## 🔧 Configuration
 
