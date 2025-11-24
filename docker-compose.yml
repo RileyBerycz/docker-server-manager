@@ -19,8 +19,7 @@ services:
       - PORT=3001
       - DATA_DIR=/server-data
     restart: unless-stopped
-    networks:
-      - server-manager-network
+    network_mode: host
 
   # Frontend React application
   frontend:
@@ -36,16 +35,11 @@ services:
     environment:
       - REACT_APP_API_URL=http://localhost:3001
       - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_HOST=0.0.0.0
     depends_on:
       - backend
     restart: unless-stopped
-    networks:
-      - server-manager-network
-
-networks:
-  server-manager-network:
-    driver: bridge
-    name: server-manager-network
+    network_mode: host
 
 volumes:
   server-data:
