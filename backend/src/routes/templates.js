@@ -12,7 +12,7 @@ const templates = [
     image: 'nginx:alpine',
     defaultPorts: [{ host: 8080, container: 80 }],
     environment: [],
-    volumes: ['./server-data/nginx:/usr/share/nginx/html:ro'],
+    volumes: ['/server-data/nginx:/usr/share/nginx/html:ro'],
     memory: 512,
     cpus: 1,
     color: '#009639'
@@ -26,7 +26,7 @@ const templates = [
     image: 'httpd:alpine',
     defaultPorts: [{ host: 8081, container: 80 }],
     environment: [],
-    volumes: ['./server-data/apache:/usr/local/apache2/htdocs/'],
+    volumes: ['/server-data/apache:/usr/local/apache2/htdocs/'],
     memory: 512,
     cpus: 1,
     color: '#D22128'
@@ -47,7 +47,7 @@ const templates = [
       'MAX_PLAYERS=20',
       'MOTD=My Minecraft Server'
     ],
-    volumes: ['./server-data/minecraft:/data'],
+    volumes: ['/server-data/minecraft:/data'],
     memory: 2048,
     cpus: 2,
     color: '#62B47A'
@@ -67,7 +67,7 @@ const templates = [
       'MAX_PLAYERS=20',
       'SERVER_NAME=My Bedrock Server'
     ],
-    volumes: ['./server-data/minecraft-bedrock:/data'],
+    volumes: ['/server-data/minecraft-bedrock:/data'],
     memory: 1024,
     cpus: 2,
     color: '#1E90FF'
@@ -81,7 +81,7 @@ const templates = [
     image: 'ollama/ollama',
     defaultPorts: [{ host: 11434, container: 11434 }],
     environment: [],
-    volumes: ['./server-data/ollama:/root/.ollama'],
+    volumes: ['/server-data/ollama:/root/.ollama'],
     memory: 4096,
     cpus: 4,
     color: '#000000',
@@ -99,7 +99,7 @@ const templates = [
       'WORLD=MyWorld',
       'DIFFICULTY=1'
     ],
-    volumes: ['./server-data/terraria:/config'],
+    volumes: ['/server-data/terraria:/config'],
     memory: 1024,
     cpus: 2,
     color: '#5C9A4A'
@@ -120,7 +120,7 @@ const templates = [
       'WORLD_NAME=MyWorld',
       'SERVER_PASS=secret123'
     ],
-    volumes: ['./server-data/valheim:/config'],
+    volumes: ['/server-data/valheim:/config'],
     memory: 2048,
     cpus: 2,
     color: '#7C4A3A'
@@ -134,7 +134,7 @@ const templates = [
     image: 'node:18-alpine',
     defaultPorts: [{ host: 3000, container: 3000 }],
     environment: ['NODE_ENV=production'],
-    volumes: ['./server-data/node-app:/app'],
+    volumes: ['/server-data/node-app:/app'],
     memory: 512,
     cpus: 1,
     color: '#68A063'
@@ -148,7 +148,7 @@ const templates = [
     image: 'python:3.11-slim',
     defaultPorts: [{ host: 5000, container: 5000 }],
     environment: [],
-    volumes: ['./server-data/python-app:/app'],
+    volumes: ['/server-data/python-app:/app'],
     memory: 512,
     cpus: 1,
     color: '#3776AB'
@@ -166,7 +166,7 @@ const templates = [
       'POSTGRES_PASSWORD=changeme',
       'POSTGRES_DB=mydb'
     ],
-    volumes: ['./server-data/postgres:/var/lib/postgresql/data'],
+    volumes: ['/server-data/postgres:/var/lib/postgresql/data'],
     memory: 512,
     cpus: 1,
     color: '#336791'
@@ -180,7 +180,7 @@ const templates = [
     image: 'redis:alpine',
     defaultPorts: [{ host: 6379, container: 6379 }],
     environment: [],
-    volumes: ['./server-data/redis:/data'],
+    volumes: ['/server-data/redis:/data'],
     memory: 256,
     cpus: 1,
     color: '#DC382D'
