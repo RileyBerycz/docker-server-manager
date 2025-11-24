@@ -23,4 +23,5 @@ app.get('/api/health', (req, res) => {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server Manager Backend running on port ${PORT}`);
+  console.log(`   Access at: http://0.0.0.0:${PORT}`);
 });
