@@ -1,11 +1,39 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+// Dynamically determine API URL based on current host
+const getApiUrl = () => {
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  
+  // Use the same host as the frontend, but with backend port
+  const currentHost = window.location.hostname;
+  return `http://${currentHost}:3001`;
+};
+
+const API_URL = getApiUrl();
 
 const api = axios.create({
   baseURL: `${API_URL}/api`,
   timeout: 30000,
 });
+
+// Add error interceptor for better debugging
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.code === 'ECONNABORTED') {
+      console.error('Request timeout - backend may be slow or unreachable');
+    } else if (error.code === 'ERR_NETWORK') {
+      console.error('Network error - cannot reach backend at:', API_URL);
+    } else if (error.response) {
+      console.error('API Error:', error.response.status, error.response.data);
+    } else {
+      console.error('Request failed:', error.message);
+    }
+    return Promise.reject(error);
+  }
+);
 
 // Server operations
 export const getServers = async () => {
