@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # Backend API for managing Docker containers
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: server-manager-backend
+    ports:
+      - "3001:3001"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./backend:/app
+      - ./server-data:/server-data
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - DATA_DIR=/server-data
+    restart: unless-stopped
+    networks:
+      - server-manager-network
+
+  # Frontend React application
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: server-manager-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:3001
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - server-manager-network
+
+  # Portainer - Docker management UI
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: unless-stopped
+    networks:
+      - server-manager-network
+
+  # Watchtower - Automatic container updates
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=86400  # Check for updates daily (24h)
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL:-}
+    restart: unless-stopped
+    networks:
+      - server-manager-network
+
+networks:
+  server-manager-network:
+    driver: bridge
+    name: server-manager-network
+
+volumes:
+  server-data:
+    driver: local
+  portainer_data:
+    driver: local
